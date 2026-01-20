@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget
 {
-  String title;
+  final String title;
 
   MyHomePage({required this.title});
 
