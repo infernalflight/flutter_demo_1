@@ -15,9 +15,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.orange),
+        colorScheme: .fromSeed(seedColor: Colors.purple),
       ),
       home: MyHomePage(title: 'Flutter Accueil'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -35,7 +36,7 @@ class MyHomePage extends StatelessWidget
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.amber,
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: const Text('TabBar Sample'),
           bottom: const TabBar(
             tabs: <Widget>[
@@ -48,8 +49,8 @@ class MyHomePage extends StatelessWidget
         body: TabBarView(
           children: <Widget>[
             Tabl(),
-            Center(child: Text("It's rainy here")),
-            Center(child: Text("It's sunny here")),
+            Tabl2(),
+            Exemple(),
           ],
         ),
         bottomNavigationBar: NavigationBar(
@@ -108,6 +109,66 @@ class Tabl extends StatelessWidget
     );
   }
 
+}
+
+class Tabl2 extends StatefulWidget
+{
+  @override
+  State<Tabl2> createState() => _Tabl2State();
+}
+
+class _Tabl2State extends State<Tabl2> {
+
+  int _compteur = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text('Compteur : $_compteur', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0)),
+        ElevatedButton(
+            onPressed: () {
+              setState(() {
+                _compteur++;
+              });
+            },
+            child: Text('Clique moi !')
+        )
+      ]
+    );
+  }
+}
+
+class Exemple extends StatefulWidget
+{
+  @override
+  State<Exemple> createState() => _ExempleState();
+}
+
+class _ExempleState extends State<Exemple> {
+
+  int _compteur = 0;
+
+
+  void _increment() {
+    setState(() {
+      _compteur++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+      return Column(
+        children: [
+          Text('Compteur incrémentable : $_compteur'),
+          ElevatedButton(
+              onPressed: _increment,
+              child: Icon(Icons.add),
+          )
+        ],
+      );
+  }
 }
 
 
