@@ -13,6 +13,7 @@ class _FormPageState extends State<FormPage> {
   bool _switchValue = false;
   String? _radioGroupValue;
   String? _dropdownValue;
+  String? _emailValue;
 
 
   String? _validateEmail(String? value) {
@@ -32,10 +33,17 @@ class _FormPageState extends State<FormPage> {
   }
 
   void _onSubmit() {
-    if(_formKey.currentState!.validate()) {
+    if(_formKey.currentState!.validate() && _switchValue) {
+        _formKey.currentState!.save();
         print(_switchValue);
         print(_radioGroupValue);
         print(_dropdownValue);
+        print(_emailValue);
+        // Transmisssion POST via un API
+    } else if (!_switchValue) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Il faut accepter les termes du contrat !!')),
+      );
     }
   }
 
@@ -53,6 +61,9 @@ class _FormPageState extends State<FormPage> {
               border: OutlineInputBorder(),
             ),
             validator: _validateEmail,
+            onSaved: (value) {
+              _emailValue = value;
+            },
           ),
           SwitchListTile(
               secondary: Icon(Icons.newspaper_outlined),
@@ -95,21 +106,21 @@ class _FormPageState extends State<FormPage> {
               )
           ),
           DropdownMenu(
-              initialSelection: _dropdownValue,
-              dropdownMenuEntries: [
-                DropdownMenuEntry(
-                    value: 'red',
-                    label: 'Rouge'
-                ),
-                DropdownMenuEntry(
-                    value: 'green',
-                    label: 'Vert'
-                ),
-                DropdownMenuEntry(
-                    value: 'blue',
-                    label: 'Bleu'
-                )
-              ],
+            initialSelection: _dropdownValue,
+            dropdownMenuEntries: [
+              DropdownMenuEntry(
+                  value: 'red',
+                  label: 'Rouge'
+              ),
+              DropdownMenuEntry(
+                  value: 'green',
+                  label: 'Vert'
+              ),
+              DropdownMenuEntry(
+                  value: 'blue',
+                  label: 'Bleu'
+              )
+            ],
             onSelected: (value) {
               _dropdownValue = value;
             },
