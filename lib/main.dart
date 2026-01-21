@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hello/titrepage.dart';
 
+import 'FormPage.dart';
 import 'model/Todo.dart';
 
 void main() {
@@ -50,12 +51,13 @@ class MyHomePage extends StatelessWidget
           children: <Widget>[
             Tabl(),
             Tabl2(),
-            Exemple(),
+            FormPage(),
           ],
         ),
         bottomNavigationBar: NavigationBar(
           selectedIndex: 0,
           onDestinationSelected: (int index) {
+
           },
           destinations: const <Widget>[
             NavigationDestination(icon: Icon(Icons.explore), label: 'Explore'),
@@ -139,37 +141,3 @@ class _Tabl2State extends State<Tabl2> {
     );
   }
 }
-
-class Exemple extends StatefulWidget
-{
-  @override
-  State<Exemple> createState() => _ExempleState();
-}
-
-class _ExempleState extends State<Exemple> {
-
-  int _compteur = 0;
-
-
-  void _increment() {
-    setState(() {
-      _compteur++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-      return Column(
-        children: [
-          Text('Compteur incrémentable : $_compteur'),
-          ElevatedButton(
-              onPressed: _increment,
-              child: Icon(Icons.add),
-          )
-        ],
-      );
-  }
-}
-
-
-
