@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hello/CommutePage.dart';
 import 'package:hello/titrepage.dart';
 
 import 'FormPage.dart';
@@ -18,7 +19,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: .fromSeed(seedColor: Colors.purple),
       ),
-      home: MyHomePage(title: 'Flutter Accueil'),
+      initialRoute: '/',
+      routes: {
+        '/' : (context) => MyHomePage(title: 'Page d\'acccueil'),
+        '/commute' : (context) => CommutePage(),
+      },
       debugShowCheckedModeBanner: false,
     );
   }
@@ -57,7 +62,9 @@ class MyHomePage extends StatelessWidget
         bottomNavigationBar: NavigationBar(
           selectedIndex: 0,
           onDestinationSelected: (int index) {
-
+            if(index == 1) {
+              Navigator.pushNamed(context, '/commute', arguments: 'Bonjour tout le monde !');
+            }
           },
           destinations: const <Widget>[
             NavigationDestination(icon: Icon(Icons.explore), label: 'Explore'),
