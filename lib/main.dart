@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hello/CommutePage.dart';
 import 'package:hello/titrepage.dart';
 
@@ -9,22 +10,35 @@ void main() {
   runApp(MyApp());
 }
 
+final GoRouter _router = GoRouter(
+    routes: [
+      GoRoute(
+          path: '/',
+          builder: (context, state) => MyHomePage(title: 'Acccueil'),
+      ),
+      GoRoute(
+        path: '/commute',
+        builder: (context, state) {
+          final String arg = state.extra as String;
+          return CommutePage(arg);
+        },
+      ),
+    ]
+);
+
+
 class MyApp extends StatelessWidget {
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: .fromSeed(seedColor: Colors.purple),
       ),
-      initialRoute: '/',
-      routes: {
-        '/' : (context) => MyHomePage(title: 'Page d\'acccueil'),
-        '/commute' : (context) => CommutePage(),
-      },
       debugShowCheckedModeBanner: false,
+      routerConfig: _router,
     );
   }
 }
@@ -63,7 +77,7 @@ class MyHomePage extends StatelessWidget
           selectedIndex: 0,
           onDestinationSelected: (int index) {
             if(index == 1) {
-              Navigator.pushNamed(context, '/commute', arguments: 'Bonjour tout le monde !');
+              context.go('/commute', extra: 'Bonjour Go Route !');
             }
           },
           destinations: const <Widget>[

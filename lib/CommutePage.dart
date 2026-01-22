@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 
 class CommutePage extends StatelessWidget
 {
+  final String bonjour;
+
+  CommutePage(this.bonjour);
+
+
   @override
   Widget build(BuildContext context) {
 
-    final String _arg = ModalRoute.of(context)!.settings.arguments as String;
+    //final String _arg = ModalRoute.of(context)!.settings.arguments as String;
 
 
     return Scaffold(
@@ -13,7 +18,7 @@ class CommutePage extends StatelessWidget
         title: Text('Commute Page'),
       ),
       body: Center(
-        child: Text(_arg),
+        child: Text(bonjour),
       ),
     );
   }
