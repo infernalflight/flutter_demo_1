@@ -17,7 +17,7 @@ final GoRouter _router = GoRouter(
           builder: (context, state) => MyHomePage(title: 'Acccueil'),
       ),
       GoRoute(
-        path: '/commute',
+        path: '/appel_api',
         builder: (context, state) {
           final String arg = state.extra as String;
           return CommutePage(arg);
@@ -77,16 +77,16 @@ class MyHomePage extends StatelessWidget
           selectedIndex: 0,
           onDestinationSelected: (int index) {
             if(index == 1) {
-              context.go('/commute', extra: 'Bonjour Go Route !');
+              context.push('/appel_api', extra: 'Bonjour Go Route !');
             }
           },
           destinations: const <Widget>[
-            NavigationDestination(icon: Icon(Icons.explore), label: 'Explore'),
-            NavigationDestination(icon: Icon(Icons.commute), label: 'Commute'),
+            NavigationDestination(icon: Icon(Icons.explore), label: 'Accueil'),
+            NavigationDestination(icon: Icon(Icons.commute), label: 'Appel API exemple'),
             NavigationDestination(
               selectedIcon: Icon(Icons.bookmark),
               icon: Icon(Icons.bookmark_border),
-              label: 'Saved',
+              label: 'Rien',
             ),
           ],
         ),
@@ -101,9 +101,9 @@ class Tabl extends StatelessWidget
 {
 
   List<Todo> todos = [
-    Todo('mon 1er todo', "c'est un truc à faire en priorité"),
-    Todo('mon 2e todo', "c'est un truc à faire ensuite"),
-    Todo('mon dernier todo', "c'est un truc à faire en dernier"),
+    Todo('mon 1er todo', false),
+    Todo('mon 2e todo', false),
+    Todo('mon dernier todo', false),
   ];
 
   @override
@@ -120,7 +120,6 @@ class Tabl extends StatelessWidget
                 child: ListTile(
                   leading: Icon(Icons.warning),
                   title: Text(todos[index].name),
-                  subtitle: Text(todos[index].desc),
                   trailing: Icon(Icons.more_vert),
                   isThreeLine: true,
                 ),

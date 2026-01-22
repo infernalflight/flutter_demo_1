@@ -1,11 +1,16 @@
 class Todo {
 
   String _name;
-  String _desc;
+  bool _completed;
 
-  Todo(this._name, this._desc);
+  Todo(this._name, this._completed);
 
-  String get desc => _desc;
+  bool get completed => _completed;
 
   String get name => _name;
+
+  static Todo fromJson(Map<String, dynamic> json) {
+    return Todo(json['title'], json['completed']);
+  }
+
 }
