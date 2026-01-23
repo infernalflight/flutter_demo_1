@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hello/CommutePage.dart';
+import 'package:hello/SecondCounter.dart';
+import 'package:hello/provider/CompteurProvider.dart';
 import 'package:hello/titrepage.dart';
+import 'package:provider/provider.dart';
 
 import 'FormPage.dart';
 import 'model/Todo.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+      ChangeNotifierProvider(
+          create: (_) => CompteurProvider(),
+          child: MyApp()
+      )
+  );
 }
 
 final GoRouter _router = GoRouter(
@@ -22,6 +30,10 @@ final GoRouter _router = GoRouter(
           final String arg = state.extra as String;
           return CommutePage(arg);
         },
+      ),
+      GoRoute(
+        path: '/second_compteur',
+        builder: (context, state) => SecondCounter(),
       ),
     ]
 );
@@ -78,6 +90,8 @@ class MyHomePage extends StatelessWidget
           onDestinationSelected: (int index) {
             if(index == 1) {
               context.push('/appel_api', extra: 'Bonjour Go Route !');
+            } else if(index == 2) {
+              context.push('/second_compteur');
             }
           },
           destinations: const <Widget>[
@@ -86,7 +100,7 @@ class MyHomePage extends StatelessWidget
             NavigationDestination(
               selectedIcon: Icon(Icons.bookmark),
               icon: Icon(Icons.bookmark_border),
-              label: 'Rien',
+              label: '2e compteur',
             ),
           ],
         ),
@@ -141,19 +155,18 @@ class Tabl2 extends StatefulWidget
 
 class _Tabl2State extends State<Tabl2> {
 
-  int _compteur = 0;
-
   @override
   Widget build(BuildContext context) {
+
+    final _compteurProvider = context.watch<CompteurProvider>();
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('Compteur : $_compteur', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0)),
+        Text('Compteur : ${_compteurProvider.compteur}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0)),
         ElevatedButton(
             onPressed: () {
-              setState(() {
-                _compteur++;
-              });
+                _compteurProvider.increment();
             },
             child: Text('Clique moi !')
         )
